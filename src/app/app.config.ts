@@ -1,24 +1,21 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import {provideKeycloak} from 'keycloak-angular';
+import {includeBearerTokenInterceptor} from 'keycloak-angular';
 
 import { routes } from './app.routes';
+import {provideKeycloakAngular} from './keycloak-init';
+import {bearerTokenInterceptorProvider} from './model/interceptors/Bearer-token-interceptor';
+import {provideHttpClient, withInterceptors} from '@angular/common/http';
+import {httpErrorInterceptor} from './model/interceptors/http-error-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideKeycloak({
-      config: {
-        url: 'http://localhost:8180',
-        realm: 'fundboost',
-        clientId: 'fundboost-client'
-      },
-      initOptions: {
-        onLoad: 'login-required',
-        checkLoginIframe: false
-      }
-    }),
+    provideKeycloakAngular(),
     provideZoneChangeDetection({eventCoalescing: true}),
-    provideBrowserGlobalErrorListeners(),
-    provideRouter(routes)
+    provideRouter(routes),
+    bearerTokenInterceptorProvider,
+    provideHttpClient(
+      withInterceptors([includeBearerTokenInterceptor, httpErrorInterceptor])
+    )
   ]
 };
