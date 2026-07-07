@@ -1,0 +1,27 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <mat-form-field appearance="outline">
+    <mat-label>Titolo</mat-label>
+    <textarea matInput formControlName="title"></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Descrizione</mat-label>
+    <textarea matInput formControlName="description"></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Obiettivo (€)</mat-label>
+    <input matInput type="number" formControlName="targetAmount" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Scadenza</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="deadline" />
+    <mat-datepicker-toggle matIconSuffix [for]="picker" />
+    <mat-datepicker #picker />
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+    Crea progetto
+  </button>
+</form>

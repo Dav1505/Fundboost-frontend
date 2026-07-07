@@ -1,0 +1,29 @@
+@if (details(); as d) {
+  <mat-card>
+    <mat-card-content>
+      <p>{{ d.project.description }}</p>
+      <mat-progress-bar
+        mode="determinate"
+        [value]="(d.project.currentAmount / d.project.targetAmount) * 100" />
+      <p>{{ d.project.currentAmount }} / {{ d.project.targetAmount }} €</p>
+      <p>Stato: {{ d.project.projectStatus }}</p>
+    </mat-card-content>
+  </mat-card>
+
+  @if (d.project.projectStatus === 'OPEN') {
+    <app-donate-form [projectId]="projectId" (donated)="onDonationSuccess()" />
+  }
+
+  <h3>Donazioni</h3>
+  @if (d.contributions.length === 0) {
+    <p>Nessuna donazione per questo progetto</p>
+  } @else {
+    <mat-list>
+      @for (c of d.contributions; track c.id) {
+        <mat-list-item>
+          {{ c.donor.firstName }} {{ c.donor.lastName }} — {{ c.amount }} € ({{ c.donatedAt | date: 'short' }})
+        </mat-list-item>
+      }
+    </mat-list>
+  }
+}

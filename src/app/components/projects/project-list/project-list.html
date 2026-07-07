@@ -1,0 +1,19 @@
+@if (loading()) {
+  <p>Caricamento progetti...</p>
+} @else {
+  <div class="project-grid">
+    @for (project of projects(); track project.id) {
+      <mat-card class="project-card">
+        <mat-card-content>
+          <p>{{ project.description }}</p>
+          <mat-progress-bar mode="determinate" [value]="progressPercent(project)" />
+          <p>{{ project.currentAmount }} / {{ project.targetAmount }} €</p>
+          <p>Scadenza: {{ project.deadline | date: 'dd/MM/yyyy' }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <a mat-button [routerLink]="['/projects', project.id]">Dettagli</a>
+        </mat-card-actions>
+      </mat-card>
+    }
+  </div>
+}
