@@ -1,0 +1,11 @@
+<mat-list>
+  @for (t of transactions(); track t.id) {
+    <mat-list-item>
+      <mat-icon matListItemIcon>{{ iconFor(t.transactionType) }}</mat-icon>
+      <div matListItemTitle>{{ t.transactionType }}</div>
+      <div matListItemLine>{{ t.amount }} € — {{ t.timestamp | date: 'short' }}</div>
+    </mat-list-item>
+  } @empty {
+    <p>Nessuna transazione registrata.</p>
+  }
+</mat-list>

@@ -1,0 +1,12 @@
+<mat-card>
+  <mat-card-content>
+    <p class="balance-label">Saldo disponibile</p>
+    <p class="balance-value">
+      @if (walletService.balance(); as balance) {
+        {{ balance | number: '1.2-2' }} €
+      } @else {
+        Caricamento...
+      }
+    </p>
+  </mat-card-content>
+</mat-card>

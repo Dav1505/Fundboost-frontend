@@ -1,6 +1,6 @@
-import { Injectable, inject } from '@angular/core';
+import {Injectable, inject, signal} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Observable, tap} from 'rxjs';
 import { API_URL } from '../support/Constants';
 import { Wallet } from '../objects/Wallet';
 import { WalletTransaction } from '../objects/WalletTransaction';
@@ -14,9 +14,16 @@ export class WalletService {
   private readonly http = inject(HttpClient);
   private readonly baseUrl = `${API_URL}/wallet`;
 
+  readonly balance = signal<number | null>(null);
+
+  refreshBalance(): void {
+    this.getBalance().subscribe();
+  }
+
   getBalance(): Observable<number> {
-    // Attenzione: l'endpoint ritorna un BigDecimal grezzo, non un oggetto wrapper
-    return this.http.get<number>(`${this.baseUrl}/balance`);
+    return this.http.get<number>(`${this.baseUrl}/balance`).pipe(
+      tap(balance => this.balance.set(balance))
+    );
   }
 
   deposit(payload: DepositPayload): Observable<Wallet> {

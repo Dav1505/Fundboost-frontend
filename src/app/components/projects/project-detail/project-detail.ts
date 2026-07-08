@@ -5,6 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ProjectService } from '../../../model/services/ProjectService';
+import {WalletService} from '../../../model/services/WalletService';
 import { ProjectDetailsDTO } from '../../../model/objects/ProjectDetailsDTO';
 import { DonateFormComponent } from './donate-form/donate-form';
 
@@ -18,6 +19,7 @@ import { DonateFormComponent } from './donate-form/donate-form';
 export class ProjectDetailComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly projectService = inject(ProjectService);
+  private readonly walletService = inject(WalletService);
 
   details = signal<ProjectDetailsDTO | null>(null);
   projectId!: number;
@@ -34,6 +36,7 @@ export class ProjectDetailComponent implements OnInit {
   }
 
   onDonationSuccess(): void {
-    this.loadDetails(); // refresh progetto + contributi dopo donazione riuscita
+    this.loadDetails();
+    this.walletService.refreshBalance();
   }
 }
