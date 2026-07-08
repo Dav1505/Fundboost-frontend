@@ -3,6 +3,7 @@ import { inject } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
 import Keycloak from 'keycloak-js';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import {SKIP_ERROR_NOTIFICATION} from '../support/skip-error-notification';
 
 export const httpErrorInterceptor: HttpInterceptorFn = (req, next) => {
   const keycloak = inject(Keycloak);
@@ -10,6 +11,10 @@ export const httpErrorInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
+      if (req.context.get(SKIP_ERROR_NOTIFICATION)) {
+        return throwError(() => error); // nessuno snackbar, gestione delegata al chiamante
+      }
+
       const backendMessage = error.error?.message ?? 'Errore imprevisto, riprova.';
 
       switch (error.status) {

@@ -1,0 +1,26 @@
+<div class="onboarding-page">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Benvenuto su FundBoost</mat-card-title>
+      <mat-card-subtitle>Completa il tuo profilo per iniziare</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <mat-form-field appearance="outline">
+          <mat-label>Nome</mat-label>
+          <input matInput formControlName="firstName" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Cognome</mat-label>
+          <input matInput formControlName="lastName" />
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || submitting()">
+          Completa registrazione
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
