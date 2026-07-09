@@ -5,10 +5,6 @@ import { API_URL } from '../support/Constants';
 import { User } from '../objects/User';
 import {SKIP_ERROR_NOTIFICATION} from '../support/skip-error-notification';
 
-export interface RegisterUserPayload {
-  firstName: string;
-  lastName: string;
-}
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -16,8 +12,8 @@ export class UserService {
   private readonly baseUrl = `${API_URL}/user`;
   private readonly walletBalanceUrl = `${API_URL}/wallet/balance`
 
-  register(payload: RegisterUserPayload): Observable<User> {
-    return this.http.post<User>(this.baseUrl, payload);
+  register(): Observable<User> {
+    return this.http.post<User>(this.baseUrl,null);
   }
   // Sfrutta il 404 di /wallet/balance come segnale di "utente non ancora registrato"
   isRegistered(): Observable<boolean> {
