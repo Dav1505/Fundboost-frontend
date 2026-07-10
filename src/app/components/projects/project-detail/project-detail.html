@@ -1,7 +1,8 @@
 @if (details(); as d) {
   <mat-card>
     <mat-card-content>
-      <p>{{ d.project.description }}</p>
+      <p>{{ d.project.title }}</p>
+      <p>{{d.project.description}}</p>
       <mat-progress-bar
         mode="determinate"
         [value]="(d.project.currentAmount / d.project.targetAmount) * 100" />

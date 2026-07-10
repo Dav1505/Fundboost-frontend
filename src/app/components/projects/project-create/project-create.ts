@@ -8,6 +8,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { ProjectService } from '../../../model/services/ProjectService';
+import {positiveAmountValidator} from '../../../model/support/positive-amount-validator';
 
 @Component({
   selector: 'app-project-create',
@@ -24,10 +25,12 @@ export class ProjectCreateComponent {
   private readonly projectService = inject(ProjectService);
   private readonly router = inject(Router);
 
+  minDate = new Date();
+
   form = this.fb.nonNullable.group({
     title: ['', Validators.required],
     description: ['', Validators.required],
-    targetAmount: [0, [Validators.required, Validators.min(0.01)]],
+    targetAmount: [0, [Validators.required, positiveAmountValidator]],
     deadline: [null as Date | null, Validators.required]
   });
 

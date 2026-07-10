@@ -5,9 +5,10 @@
     @for (project of projects(); track project.id) {
       <mat-card class="project-card">
         <mat-card-content>
-          <p>{{ project.description }}</p>
+          <p>{{ project.title }}</p>
           <mat-progress-bar mode="determinate" [value]="progressPercent(project)" />
           <p>{{ project.currentAmount }} / {{ project.targetAmount }} €</p>
+          <p>Stato: {{project.projectStatus}}</p>
           <p>Scadenza: {{ project.deadline | date: 'dd/MM/yyyy' }}</p>
         </mat-card-content>
         <mat-card-actions>

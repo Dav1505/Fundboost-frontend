@@ -3,6 +3,7 @@ import {ProjectStatus} from './ProjectStatus';
 
 export interface Project {
   id: number;
+  title: string;
   description: string;
   targetAmount: number;
   currentAmount: number;

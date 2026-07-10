@@ -17,3 +17,16 @@
 .content {
   padding: 24px;
 }
+mat-nav-list {
+  padding: 8px;
+
+  a.mat-mdc-list-item {
+    border-radius: 8px;
+    margin-bottom: 4px;
+    height: 48px;
+
+    .mat-icon {
+      margin-right: 12px;
+    }
+  }
+}

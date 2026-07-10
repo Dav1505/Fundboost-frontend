@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { WalletService } from '../../../model/services/WalletService';
+import {positiveAmountValidator} from '../../../model/support/positive-amount-validator';
 
 @Component({
   selector: 'app-wallet-deposit',
@@ -22,7 +23,7 @@ export class WalletDepositComponent {
   submitting = signal(false);
 
   form = this.fb.nonNullable.group({
-    amount: [0, [Validators.required, Validators.min(0.01)]]
+    amount: [0, [Validators.required, positiveAmountValidator]]
   });
 
   submit(): void {

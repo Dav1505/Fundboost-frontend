@@ -1,24 +1,29 @@
-<form [formGroup]="form" (ngSubmit)="submit()">
+<form [formGroup]="form" (ngSubmit)="submit()" class="vertical-form">
   <mat-form-field appearance="outline">
     <mat-label>Titolo</mat-label>
-    <textarea matInput formControlName="title"></textarea>
+    <textarea matInput formControlName="title" rows="4"></textarea>
   </mat-form-field>
-
   <mat-form-field appearance="outline">
     <mat-label>Descrizione</mat-label>
-    <textarea matInput formControlName="description"></textarea>
+    <textarea matInput formControlName="description" rows="4"></textarea>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
     <mat-label>Obiettivo (€)</mat-label>
-    <input matInput type="number" formControlName="targetAmount" />
+    <input matInput type="number" formControlName="targetAmount" min="0" step="1" />
+    @if (form.controls.targetAmount.hasError('positiveAmount')) {
+      <mat-error>L'obiettivo deve essere maggiore di zero</mat-error>
+    }
   </mat-form-field>
 
   <mat-form-field appearance="outline">
     <mat-label>Scadenza</mat-label>
-    <input matInput [matDatepicker]="picker" formControlName="deadline" />
+    <input matInput [matDatepicker]="picker" formControlName="deadline" [min]="minDate" />
     <mat-datepicker-toggle matIconSuffix [for]="picker" />
     <mat-datepicker #picker />
+    @if (form.controls.deadline.hasError('required')) {
+      <mat-error>La scadenza è obbligatoria</mat-error>
+    }
   </mat-form-field>
 
   <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
