@@ -1,6 +1,9 @@
 @if (loading()) {
   <p>Caricamento progetti...</p>
 } @else {
+  @if (projects() == null || projects().length == 0){
+    <p>Non hai ancora creato nessun progetto</p>
+  }
   <div class="project-grid">
     @for (project of projects(); track project.id) {
       <mat-card class="project-card">
