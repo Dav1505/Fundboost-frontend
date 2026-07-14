@@ -16,7 +16,7 @@ export interface CreateProjectPayload {
 export interface PageQuery{
   pageNumber: number;
   pageSize: number;
-  sortBy?: string
+  sortBy?: string;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -39,6 +39,15 @@ export class ProjectService {
 
   getMyProjects(): Observable<Project[]> {
     return this.http.get<Project[]>(`${this.baseUrl}/my-projects`);
+  }
+
+  getMyProjectsPaged(query: PageQuery): Observable<PagedResponse<Project>>{
+    const params = new HttpParams()
+      .set('pageNumber',query.pageNumber)
+      .set('pageSize',query.pageSize)
+      .set('sortBy',query.sortBy ?? 'id');
+
+    return this.http.get<PagedResponse<Project>>(`${this.baseUrl}/my-projects/paged`,{params});
   }
 
   createProject(payload: CreateProjectPayload): Observable<Project> {

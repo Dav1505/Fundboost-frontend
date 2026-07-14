@@ -20,4 +20,11 @@
       </mat-card>
     }
   </div>
+
+  <mat-paginator
+    [length]="totalElements()"
+    [pageSize]="pageSize()"
+    [pageIndex]="pageIndex()"
+    [pageSizeOptions]="[6, 9, 18, 30]"
+    (page)="onPageChange($event)" />
 }

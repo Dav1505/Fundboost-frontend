@@ -4,25 +4,49 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { WalletService } from '../../../model/services/WalletService';
 import { WalletTransaction } from '../../../model/objects/WalletTransaction';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-wallet-transactions',
   standalone: true,
-  imports: [CommonModule, MatListModule, MatIconModule],
+  imports: [CommonModule, MatListModule, MatIconModule, MatPaginator],
   templateUrl: './wallet-transactions.html',
   styleUrl: './wallet-transactions.css'
 })
-export class WalletTransactionsComponent implements OnInit {
+export class WalletTransactionsComponent {
   private readonly walletService = inject(WalletService);
 
   transactions = signal<WalletTransaction[]>([]);
+  totalElements = signal(0);
+  pageSize = signal(9);
+  pageIndex = signal(0);
+  loading = signal(true);
 
-  ngOnInit(): void {
-    this.walletService.getTransactions().subscribe(t => this.transactions.set(t));
+  constructor() {
+    this.loadPage();
+  }
+
+  loadPage(): void{
+    this.loading.set(true);
+    this.walletService.getTransactionsPaged({
+      pageNumber: this.pageIndex(),
+      pageSize: this.pageSize()
+    }).subscribe(res => {
+      this.transactions.set(res.content);
+      this.totalElements.set(res.totalElements);
+      this.loading.set(false);
+    });
+  }
+
+  onPageChange(event: PageEvent): void{
+    this.pageIndex.set(event.pageIndex);
+    this.pageSize.set(event.pageSize);
+    this.loadPage();
   }
 
   refresh(): void {
-    this.walletService.getTransactions().subscribe(t => this.transactions.set(t));
+    this.pageIndex.set(0);
+    this.loadPage();
   }
 
   iconFor(type: WalletTransaction['transactionType']): string {
