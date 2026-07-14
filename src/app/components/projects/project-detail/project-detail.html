@@ -1,8 +1,8 @@
 @if (details(); as d) {
   <mat-card>
     <mat-card-content>
-      <p>{{ d.project.title }}</p>
-      <p>{{d.project.description}}</p>
+      <h2>{{ d.project.title }}</h2>
+      <p>{{ d.project.description }}</p>
       <mat-progress-bar
         mode="determinate"
         [value]="(d.project.currentAmount / d.project.targetAmount) * 100" />
@@ -16,15 +16,22 @@
   }
 
   <h3>Donazioni</h3>
-  @if (d.contributions.length === 0) {
+  @if (d.contributions.content.length === 0) {
     <p>Nessuna donazione per questo progetto</p>
   } @else {
     <mat-list>
-      @for (c of d.contributions; track c.id) {
+      @for (c of d.contributions.content; track c.id) {
         <mat-list-item>
           {{ c.donor.firstName }} {{ c.donor.lastName }} — {{ c.amount }} € ({{ c.donatedAt | date: 'short' }})
         </mat-list-item>
       }
     </mat-list>
+
+    <mat-paginator
+      [length]="d.contributions.totalElements"
+      [pageSize]="pageSize()"
+      [pageIndex]="pageIndex()"
+      [pageSizeOptions]="[5, 10, 20]"
+      (page)="onContributionsPageChange($event)" />
   }
 }
