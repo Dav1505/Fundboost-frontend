@@ -6,9 +6,9 @@
       <mat-card class="project-card">
         <mat-card-content>
           <h3>{{ project.title }}</h3>
-          <p>{{ project.description }}</p>
           <mat-progress-bar mode="determinate" [value]="progressPercent(project)" />
           <p>{{ project.currentAmount }} / {{ project.targetAmount }} €</p>
+          <p>Stato: {{project.projectStatus}}</p>
           <p>Scadenza: {{ project.deadline | date: 'dd/MM/yyyy' }}</p>
         </mat-card-content>
         <mat-card-actions>

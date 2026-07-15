@@ -8,6 +8,7 @@
         [value]="(d.project.currentAmount / d.project.targetAmount) * 100" />
       <p>{{ d.project.currentAmount }} / {{ d.project.targetAmount }} €</p>
       <p>Stato: {{ d.project.projectStatus }}</p>
+      <p>Scadenza: {{ d.project.deadline | date: 'dd/MM/yyyy' }}</p>
     </mat-card-content>
   </mat-card>
 

@@ -1,32 +1,30 @@
 .layout-container {
   height: 100vh;
 }
-
 .sidenav {
   width: 240px;
 }
-
 .sidenav-header {
   padding: 16px;
 }
-
 .active-link {
-  background-color: rgba(0, 0, 0, 0.06);
+    background-color: rgba(0, 0, 0, 0.06);
 }
-
 .content {
   padding: 24px;
-}
-mat-nav-list {
-  padding: 8px;
-
-  a.mat-mdc-list-item {
-    border-radius: 8px;
-    margin-bottom: 4px;
-    height: 48px;
-
-    .mat-icon {
-      margin-right: 12px;
+} mat-nav-list {
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    a.mat-mdc-list-item {
+      border-radius: 8px;
+      margin-bottom: 4px;
+      height: 48px;
+      .mat-icon {
+        margin-right: 12px;
+      }
     }
   }
+.logout-item {
+  color: var(--mat-sys-error, #b3261e);
 }
