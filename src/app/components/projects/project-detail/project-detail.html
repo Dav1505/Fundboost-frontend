@@ -2,6 +2,7 @@
   <mat-card>
     <mat-card-content>
       <h2>{{ d.project.title }}</h2>
+      <h3>Creato da {{d.project.creator?.firstName}} {{d.project.creator?.lastName}} </h3>
       <p>{{ d.project.description }}</p>
       <mat-progress-bar
         mode="determinate"
